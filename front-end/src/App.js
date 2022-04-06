@@ -1,25 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
+import { Navigate, BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Users from './user/pages/Users';
+import withRouter from './hoc/withRouter';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" 
+          exact={true}
+          element={Users}
+        />
+        <Route 
+          path='*'
+          element={<Navigate to='/' replace />}
+          />
+      </Routes>
+    </Router>
   );
 }
 
-export default App;
+export default withRouter(App);
