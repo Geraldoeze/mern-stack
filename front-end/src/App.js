@@ -3,6 +3,7 @@ import './App.css';
 import { Navigate, BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Users from './user/pages/Users';
 import withRouter from './hoc/withRouter';
+import NewPlace from './places/pages/NewPlaces';
 
 function App() {
   return (
@@ -10,8 +11,12 @@ function App() {
       <Routes>
         <Route path="/" 
           exact={true}
-          element={Users}
-        />
+          element={<Users />}
+        /> 
+        <Route path="/places/new" 
+        exact={true}
+        element={<NewPlace />}
+      />
         <Route 
           path='*'
           element={<Navigate to='/' replace />}
