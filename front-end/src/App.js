@@ -4,6 +4,8 @@ import { Navigate, BrowserRouter as Router, Routes, Route } from 'react-router-d
 import Users from './user/pages/Users';
 import withRouter from './hoc/withRouter';
 import NewPlace from './places/pages/NewPlaces';
+import React from 'react';
+
 
 function App() {
   return (
@@ -26,4 +28,4 @@ function App() {
   );
 }
 
-export default withRouter(App);
+export default App;
