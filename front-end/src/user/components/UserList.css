@@ -5,6 +5,7 @@
   width: 90%;
   max-width: 50rem;
   display: flex;
+  text-align: center;
   justify-content: center;
   flex-wrap: wrap;
 }

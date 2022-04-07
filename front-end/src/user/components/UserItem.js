@@ -1,13 +1,16 @@
 import React from "react";
 import './UserItem.css';
-
+import Avatar from "../../shared/components/UIElements/Avatar/Avatar";
+import { Link } from "react-router-dom";
+import Card from "../../shared/components/UIElements/Card/Card";
 
 const UserItem = props => {
     return ( 
         <li className="user-item"> 
-          <div className="user-item__content">
+          <Card className='user-item__content'>
+            <Link to={`/${props.id}/places`}>
               <div className="user-item__image">
-                  <img src={props.Image} alt={props.name} />
+                  <Avatar image={props.image} alt={props.name} />
 
               </div>
               <div className="user-item__info" >
@@ -16,7 +19,8 @@ const UserItem = props => {
                       {props.placeCount} {props.placeCount === 1 ? 'Place' : 'Places' }
                   </h3>
               </div> 
-          </div>
+            </Link> 
+          </Card>   
         </li>
      );
 }
