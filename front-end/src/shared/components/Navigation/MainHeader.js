@@ -1,5 +1,4 @@
 import React from "react";
-import { OutletProps } from "react-router-dom";
 
 import './MainHeader.css';
 

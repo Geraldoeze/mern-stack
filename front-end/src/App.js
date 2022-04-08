@@ -1,15 +1,16 @@
-import logo from './logo.svg';
+
 import './App.css';
 import { Navigate, BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Users from './user/pages/Users';
-import withRouter from './hoc/withRouter';
+// import withRouter from './hoc/withRouter';
 import NewPlace from './places/pages/NewPlaces';
 import React from 'react';
+import MainNavigation from './shared/components/Navigation/MainNavigation';
 
-
-function App() {
+const App = ( ) => {
   return (
     <Router>
+      <MainNavigation />
       <Routes>
         <Route path="/" 
           exact={true}
