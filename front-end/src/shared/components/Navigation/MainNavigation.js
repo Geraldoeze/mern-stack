@@ -13,7 +13,7 @@ const MainNavigation = (props) => {
                 <span />
             </button>
             <h1 className="main-navigation__title">
-                <Link>Your Places </Link>
+                {/* <Link>Your Places </Link> */}
             </h1>
             <nav>
                 ...
