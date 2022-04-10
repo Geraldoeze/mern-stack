@@ -8,7 +8,9 @@ import React from 'react';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
 
 const App = ( ) => {
-  const routes = (      <Routes>
+  const routes = ( 
+  <main>     
+  <Routes>
     <Route path="/" 
       exact={true}
       element={<Users />}
@@ -16,9 +18,11 @@ const App = ( ) => {
     <Route path="/places/new" 
     exact={true}
     element={<NewPlace />}
-  />
+   />
    
-  </Routes>)
+  </Routes>
+  </main>
+  )
   return (
     <div>
     <MainNavigation />
