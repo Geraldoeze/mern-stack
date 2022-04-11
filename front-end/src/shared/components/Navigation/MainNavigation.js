@@ -20,14 +20,14 @@ const MainNavigation = (props) => {
     return (
         <React.Fragment>
             {drawerIsOpen && <Backdrop onClick={closeDrawer} />}
-            {drawerIsOpen && (<SideDrawer>
+            <SideDrawer show={drawerIsOpen} onClick={closeDrawer}>
             <nav className="main-navigation__drawer-nav">
                 <NavLinks />
             </nav>
-        </SideDrawer>
-        )}
+            </SideDrawer>
+        
          
-        <MainHeader>
+          <MainHeader>
             <button className="main-navigation__menu-btn" onClick={openDrawer}>
                 <span />
                 <span />
@@ -39,7 +39,7 @@ const MainNavigation = (props) => {
             <nav className="main-navigation__header-nav">
                 <NavLinks />
             </nav>
-        </MainHeader>
+          </MainHeader>
         </React.Fragment>
      );
 }
