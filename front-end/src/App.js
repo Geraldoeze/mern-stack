@@ -6,6 +6,7 @@ import Users from './user/pages/Users';
 import NewPlace from './places/pages/NewPlaces';
 import React from 'react';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
+import UserPlaces from './places/pages/UserPlaces';
 
 const App = ( ) => {
   const routes = ( 
@@ -19,7 +20,12 @@ const App = ( ) => {
     exact={true}
     element={<NewPlace />}
    />
-   
+    <Route path="/:userId/places"
+      exact={true}
+      element={
+      <UserPlaces />
+      }
+    />
   </Routes>
   </main>
   )
