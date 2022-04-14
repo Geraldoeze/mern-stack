@@ -16,6 +16,18 @@ const DUMMY_PLACES = [
         creator: 'u2'
     },
     {
+        id: 'p12',
+        title: 'Empire States',
+        description: 'An AMAzing building',
+        imageUrl: '',
+        address: '',
+        location: {
+            lat: 40.7484405,
+            lng: -73.9878
+        },
+        creator: 'u12'
+    },
+    {
         id: 'p3',
         title: 'Empire State',
         description: 'An AMazing building',
