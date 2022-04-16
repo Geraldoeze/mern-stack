@@ -33,10 +33,10 @@ const Modal = (props) => {
           classNames="modal" 
           mounOnEnter 
           unmountOnExit >
-          
+         <ModalOverlay {...props} />
         </CSSTransition>
        </React.Fragment>
      );
-}
+} 
  
 export default Modal;
