@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 const DUMMY_PLACES = [
     {
-        id: 'p1',
+        id: 'p01',
         title: 'Empire State',
         description: 'An AMazing building',
         imageUrl: '',
@@ -25,10 +25,10 @@ const DUMMY_PLACES = [
             lat: 40.7484405,
             lng: -73.9878
         },
-        creator: 'u12'
+        creator: 'se2'
     },
     {
-        id: 'p3',
+        id: 'p13',
         title: 'Empire State',
         description: 'An AMazing building',
         imageUrl: '',
