@@ -7,7 +7,7 @@ const DUMMY_PLACES = [
         id: 'p01',
         title: 'Empire State',
         description: 'An AMazing building',
-        imageUrl: '',
+        imageUrl: 'https://th.bing.com/th/id/OIP.XHgMmwl_hhDHI3h5O5sWLAHaF1?pid=ImgDet&w=189&h=148&c=7',
         address: '',
         location: {
             lat: 40.7484405,
@@ -19,7 +19,7 @@ const DUMMY_PLACES = [
         id: 'p12',
         title: 'Empire States',
         description: 'An AMAzing building',
-        imageUrl: '',
+        imageUrl: 'https://th.bing.com/th/id/OIP.XHgMmwl_hhDHI3h5O5sWLAHaF1?pid=ImgDet&w=189&h=148&c=7',
         address: '',
         location: {
             lat: 40.7484405,
@@ -31,7 +31,7 @@ const DUMMY_PLACES = [
         id: 'p13',
         title: 'Empire State',
         description: 'An AMazing building',
-        imageUrl: '',
+        imageUrl: 'https://th.bing.com/th/id/OIP.XHgMmwl_hhDHI3h5O5sWLAHaF1?pid=ImgDet&w=189&h=148&c=7',
         address: '',
         location: {
             lat: 40.7484405,
