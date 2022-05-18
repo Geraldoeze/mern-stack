@@ -35,17 +35,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "presets": [
-    [
-      "@babel/preset-env",
-      {
-        "useBuiltIns": "entry",
-        "corejs": "3.22"
-      }
-    ]
-  ],
-  "devDependencies": {
-    "@types/mapbox-gl": "^2.7.1"
   }
 }
