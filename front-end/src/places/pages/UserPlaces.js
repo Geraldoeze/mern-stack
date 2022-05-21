@@ -13,7 +13,7 @@ export const DUMMY_PLACES = [
             lat: 40.7484405,
             lng: -73.9878
         },
-        creator: 'u2'
+        creator: 'ul'
     },
     {
         id: 'p12',
