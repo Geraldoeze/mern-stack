@@ -6,12 +6,20 @@ import Modal from "../../shared/components/UIElements/Modal";
 import Map from "../../shared/components/UIElements/Map";
 
 const PlaceItem = (props) => {
-    const [ showMap, setShowMap ] = useState(false);
-
+    const [ showMap, setShowMap ]  = useState(false);
+    const [showConfirmM, setShowConfirmM] = useState(false);
+    
     const openMapHandler = () => setShowMap(true)
 
     const closeMapHandler = () => setShowMap(false);
 
+    const showDeleteWarningHandler = () => {
+        setShowConfirmM(true)
+    } 
+
+    const cancelDeleteHandler = () => {
+        setShowConfirmM(false)
+    }
     return (
         <React.Fragment>
         <Modal 
@@ -26,7 +34,18 @@ const PlaceItem = (props) => {
                 <Map center={props.coordinates} zoom={15} />
             </div>
         </Modal>  
-
+        <Modal 
+            header="Are you sure?"
+            footerClass="place-item__modal-actions" 
+            footer={
+                 <React.Fragment>
+                     <Button inverse>CANCEL</Button>
+                     <Button danger>DELETE</Button>
+                 </React.Fragment>
+            }
+        >
+            <p>Do you want to proceed and delete this place? Please note that it can't be undone </p>
+        </Modal>
         <li className="place-item">
             <Card className="place-item__content">
             <div className="place-item__image">
