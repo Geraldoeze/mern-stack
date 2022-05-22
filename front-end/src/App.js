@@ -15,31 +15,37 @@ const App = ( ) => {
   <main>     
   <Routes>
     <Route path="/" 
-      exact={true}
+      exact="true"
       element={<Users />}
     /> 
     <Route path="/places/new" 
-    exact={true}
-    element={<NewPlace />}
+      exact="true"
+      element={<NewPlace />}
    />
     <Route path="/:userId/places"
-      exact={true}
+      exact="true"
       element={
       <UserPlaces />
       }
     />
      <Route path="/places/:placeId"
-      exact={true}
+      exact="true"
       element={
       <UpdatePlace />
       }
     />
      <Route path="/auth"
-      exact={true}
+      exact="true"
       element={
       <Auth />
       }
     />
+     <Route path="*"
+      exact="true"
+      element={
+      <Navigate to="/" />
+      }
+     />
   </Routes>
   
   </main>
