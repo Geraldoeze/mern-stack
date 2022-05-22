@@ -25,9 +25,21 @@ const Auth = () => {
 
       const switchModeHandler = () => {
          if (!isLoginMode) {
-             setFormData({}, formState.inputs.email.isValid && formState.inputs.password.isValid)
+             setFormData(
+            {
+                ...formState.inputs,
+                 name: undefined
+             }, formState.inputs.email.isValid && formState.inputs.password.isValid)
+         } else {
+             setFormData({
+                 ...formState.inputs,
+                 name: {
+                     value: '',
+                     isValid: false
+                 }
+             } , false);
          } 
-         setIsLoginMode((prevState) => !prevState);
+         setIsLoginMode((prevMode) => !prevMode);
       };
 
       const authSubmitHandler = event => {
@@ -73,6 +85,7 @@ const Auth = () => {
               disable={!formState.isValid}
             >{isLoginMode ? 'LOGIN' : 'SIGNUP'}</Button>
             <Button 
+              type="button"
               inverse 
               onClick={switchModeHandler} 
             >SWITCH TO {isLoginMode ? 'SIGNUP' : 'LOGIN'} </Button>
