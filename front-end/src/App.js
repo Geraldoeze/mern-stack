@@ -23,50 +23,76 @@ const App = ( ) => {
     setIsLoggedIn(false);
   }, []);
 
-  const routes = ( 
-  <main>     
-  <Routes>
-    <Route path="/" 
-      exact="true"
-      element={<Users />}
-    /> 
-    <Route path="/places/new" 
-      exact="true"
-      element={<NewPlace />}
-   />
-    <Route path="/:userId/places"
-      exact="true"
-      element={
-      <UserPlaces />
-      }
-    />
-     <Route path="/places/:placeId"
-      exact="true"
-      element={
-      <UpdatePlace />
-      }
-    />
-     <Route path="/auth"
-      exact="true"
-      element={
-      <Auth />
-      }
-    />
-     <Route path="*"
-      exact="true"
-      element={
-      <Navigate to="/" />
-      }
-     />
-  </Routes>
+  let routes;  
   
-  </main>
-  )
+  if (isLoggedIn) {
+    routes=(
+      <React.Fragment>
+       <Route path="/" 
+          exact="true"
+          element={<Users />}
+        /> 
+        <Route path="/places/new" 
+          exact="true"
+           element={<NewPlace />}
+        />
+        <Route path="/:userId/places"
+          exact="true"
+          element={
+          <UserPlaces />
+          }
+        />
+        <Route path="/places/:placeId"
+          exact="true"
+           element={
+          <UpdatePlace />
+          }
+        />
+        <Route path="*"
+          exact="true" 
+          element={
+          <Navigate to="/auth" />
+          }
+        />
+      </React.Fragment>
+    )
+  } else {
+    routes = (
+      <React.Fragment>
+      <Route path="/" 
+        exact="true"
+        element={<Users />}
+      /> 
+      <Route path="/:userId/places"
+        exact="true"
+        element={
+        <UserPlaces />
+        }
+      />
+      <Route path="/auth"
+        exact="true"
+        element={
+        <Auth />
+        }
+      />
+      <Route path="*"
+        exact="true" 
+        element={
+        <Navigate to="/" />
+        }
+     />
+      </React.Fragment>
+    )
+  }
+
   return (
     <AuthContext.Provider value={{isLoggedIn: isLoggedIn, login: login, logout: logout}}>
     <MainNavigation />
-    
-      {routes}
+     <main>
+       <Routes>
+        {routes}
+      </Routes>
+     </main>
     </AuthContext.Provider>
   );
 }
