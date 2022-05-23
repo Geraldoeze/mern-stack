@@ -51,7 +51,7 @@ const App = ( ) => {
         <Route path="*"
           exact="true" 
           element={
-          <Navigate to="/auth" />
+          <Navigate to="/" />
           }
         />
       </React.Fragment>
@@ -78,7 +78,7 @@ const App = ( ) => {
       <Route path="*"
         exact="true" 
         element={
-        <Navigate to="/" />
+        <Navigate to="/auth" />
         }
      />
       </React.Fragment>

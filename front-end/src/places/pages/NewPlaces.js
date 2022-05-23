@@ -23,7 +23,7 @@ const NewPlace = () => {
         }
     }, false);
 
-
+console.log(formState.isValid)
 
     const placeSubmitHandler = event => {
     event.preventDefault();
@@ -56,9 +56,9 @@ return (
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Please enter a valid address."
             onInput={inputHandler}
-        />
+        /> 
 
-        <Button type="submit" disable={!formState.isValid}>
+        <Button type="submit" disable={formState.isValid}>
             ADD PLACE
         </Button>
     </form>
