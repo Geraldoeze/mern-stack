@@ -1,12 +1,12 @@
-const http = require('http');
+const express = require('express');
 
-const server = http.createServer((req, res) => {
-    console.log("Server Running" )
-    console.log(req.method, req.url);
+const app = express();
 
-
-    res.setHeader('Content-Type', 'text/plain')
-    res.end("Success");
+app.use((req, res, next) => {
+    
+})
+app.use((req, res, next) => {
+    res.send('<form method="POST"><input type="text" name="username"><button type="submit>Create User</button></form>')
 })
 
-server.listen(5000);
+app.listen(5000); 
