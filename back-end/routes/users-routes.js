@@ -15,14 +15,20 @@ const DUMMY_PLACES = [
         address: '15 W 20th St, FCT Abuja Near ChurchGate',
         creator: 'u1'
     }
-];
+]; 
 
-router.get('/:uid', (req, res, next) => {
+router.get('/user/:uid', (req, res, next) => {
     const userId = req.params.uid;
-    const user = DUMMY_PLACES.find(u => {
-        return u.creator === userId
+    const place = DUMMY_PLACES.find(p => {
+        return p.creator === userId
     })
-    res.json({user})
+    if(!place) {
+        const error = new Error('No User found');
+        error.code = 404;
+        throw error;
+      } 
+      
+    res.json({place})
 })
 
 module.exports = router;

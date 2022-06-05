@@ -21,6 +21,11 @@ router.get('/:placeid', (req, res, next) => {
   const place = DUMMY_PLACES.find(p => {
       return p.id === placeId
   })
+  if(!place) {
+    const error = new Error('No place found');
+    error.code = 404;
+    next(error);
+  } 
   res.json({place: place});
 });
 
