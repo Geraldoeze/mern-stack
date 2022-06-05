@@ -1,20 +1,20 @@
 const uuid = require('uuid');
 
 const HttpError = require('../models/http-error');
-const {DUMMY_PLACES} = require('../models/dummy')
-// const DUMMY_PLACES = [
-//     {
-//         id: 'p12',
-//         title: 'Twin Tower Naija',
-//         description: 'The tallest building in Abuja',
-//         location: {
-//             lat: 20.446634,
-//             lng: 50.444356
-//         },
-//         address: '15 W 20th St, FCT Abuja Near ChurchGate',
-//         creator: 'u1'
-//     }
-//     ];
+
+let DUMMY_PLACES = [
+    {
+        id: 'p12',
+        title: 'Twin Tower Naija',
+        description: 'The tallest building in Abuja',
+        location: {
+            lat: 20.446634,
+            lng: 50.444356
+        },
+        address: '15 W 20th St, FCT Abuja Near ChurchGate',
+        creator: 'u1'
+    }
+    ];
     
 const getPlaceById = (req, res, next) => {
     const placeId = req.params.placeid;
@@ -28,7 +28,6 @@ const getPlaceById = (req, res, next) => {
     } 
     res.json({place: place});
 };
-
 
 const getPlaceByUserId = (req, res, next) => {
     const userId = req.params.uid;
@@ -74,7 +73,11 @@ exports.updatePlace = (req, res, next) => {
 };
 
 exports.deletePlace = (req, res, next) => {
-
+    const placeId = req.params.placeid;
+  DUMMY_PLACES = DUMMY_PLACES.filter(p => {
+    return p.id !== placeId
+  });
+  res.status(200).json({message: 'Deleted Place'})
 };
 
 
