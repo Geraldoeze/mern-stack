@@ -1,13 +1,22 @@
+const DUMMY_USERS = [
+    {
+        id: 'u1',
+        name: ' Gerald Eze',
+        email: 'test2@test.com',
+        password: '111111test'
+    }
+]
+const HttpError = require('../models/http-error');
 
-const UserById = (req, res, next) => {
-    const userId = req.params.uid;
-    const place = DUMMY_PLACES.find(p => {
-        return p.creator === userId
-    })
-    if(!place) {
-        throw new HttpError('No place found', 404);
-        
-      } 
-      
-    res.json({place})
-}
+exports.getUsers = (req, res, next) => {
+   
+    res.status(200).json({users: DUMMY_USERS})
+};
+
+exports.createNewUser = (req, res, next) => {
+
+};
+
+exports.loginUser = (req, res, next) => {
+
+};
