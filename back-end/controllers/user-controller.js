@@ -14,6 +14,11 @@ exports.getUsers = (req, res, next) => {
 };
 
 exports.createNewUser = (req, res, next) => {
+  const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log(errors)
+        throw new HttpError('Invalid Inputs', 422);
+    }
   const { name, email, password } = req.body;
 
   const hasUser = DUMMY_USERS.find(u => u.email === email);
@@ -33,6 +38,7 @@ exports.createNewUser = (req, res, next) => {
 };
 
 exports.loginUser = (req, res, next) => {
+  
   const { email, password } = req.body;
   const Userlogin = DUMMY_USERS.find(u => u.email === email);
   if (!Userlogin || Userlogin.password !== password) {
