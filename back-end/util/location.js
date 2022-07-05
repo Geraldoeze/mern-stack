@@ -2,8 +2,7 @@ const axios = require('axios');
 
 const HttpError = require('../models/http-error');
 
-
-
+const API_KEY = "AIzaSyBiphie6iQJYWNKIwUKlQmN4j8NvXybalQ";
 async function getCoordsForAddress(address) {
   // return {
   //   lat: 40.7484474,
@@ -16,18 +15,19 @@ async function getCoordsForAddress(address) {
   );
 
   const data = response.data;
+  const shortName = data.results[0].formatted_address
 
   if (!data || data.status === 'ZERO_RESULTS') {
     const error = new HttpError(
-      'Could not find location for the specified address.',
-      422
+      // 'Could not find location for the specified address.',
+      // 422
     );
     throw error;
   }
 
   const coordinates = data.results[0].geometry.location;
-
-  return coordinates;
+  console.log(shortName)
+  return coordinates
 }
 
 module.exports = getCoordsForAddress;
