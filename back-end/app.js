@@ -8,6 +8,7 @@ const userRoutes = require('./routes/users-routes');
 
 const app = express();
 const HttpError = require('./models/http-error');
+const e = require('express');
 
 
 const URI = 'mongodb://127.0.0.1:27017/maps';
@@ -34,6 +35,11 @@ app.use((error, req, res, next) => {
   res.json({message: error.message || 'An unknown error occurred'});
 });
 
-app.listen(5000, ser=> {
-    console.log("Connect", ser) 
-})
+mongoose
+  .connect(URI)
+  .then( () => {
+    app.listen(5000);
+  })
+  .catch(err => {
+    console.log(err)
+  });
