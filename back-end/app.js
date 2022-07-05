@@ -39,6 +39,7 @@ mongoose
   .connect(URI)
   .then( () => {
     app.listen(5000);
+    console.log("Connected!!")
   })
   .catch(err => {
     console.log(err)
