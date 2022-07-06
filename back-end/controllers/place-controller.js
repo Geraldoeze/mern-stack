@@ -44,7 +44,7 @@ const createPlace = async (req, res, next) => {
     let coordinates;
     try {
         coordinates = await getCoordinateAddress(address);
-        console.log(coordinates)
+        console.log("Na here", coordinates)
     } catch (error) {
         return next(error); 
     }
@@ -53,11 +53,7 @@ const createPlace = async (req, res, next) => {
         title: title,
         description: description,
         address: address,
-        location: {
-            lat: 4453,
-            lng: 4311
-        },
-        // location: coordinates,
+        location: coordinates,
         image: "lion.jpg",
         creator: creator
     });
