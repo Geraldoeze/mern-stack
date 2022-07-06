@@ -4,19 +4,7 @@ const HttpError = require('../models/http-error');
 const getCoordinateAddress = require('../util/location');
 const Place = require('../models/place');
 
-let DUMMY_PLACES = [
-    {
-        id: 'p12',
-        title: 'Twin Tower Naija',
-        description: 'The tallest building in Abuja',
-        location: {
-            lat: 20.446634,
-            lng: 50.444356
-        },
-        address: '15 W 20th St, FCT Abuja Near ChurchGate',
-        creator: 'u1'
-    }
-    ];
+
     
 const getPlaceById = (req, res, next) => {
     const placeId = req.params.placeid;
@@ -55,22 +43,27 @@ const createPlace = async (req, res, next) => {
 
     let coordinates;
     try {
-        coordinates = await getCoordinateAddress(address)
+        coordinates = await getCoordinateAddress(address);
+        console.log(coordinates)
     } catch (error) {
         return next(error); 
     }
    
     const createdPlace = new Place({
-        title,
-        description,
-        address,
-        location: coordinates,
+        title: title,
+        description: description,
+        address: address,
+        location: {
+            lat: 4453,
+            lng: 4311
+        },
+        // location: coordinates,
         image: "lion.jpg",
-        creator
+        creator: creator
     });
 
     try {
-        await createPlace.save();
+        await createdPlace.save();
     } catch (err) {
         const error = new HttpError(
             'Creating place failed, please try again', 
@@ -79,7 +72,7 @@ const createPlace = async (req, res, next) => {
         return next(error);
     }
 
-     
+    
     res.status(201).json({place: createdPlace})
 }
 

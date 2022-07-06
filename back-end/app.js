@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongodb = require('mongodb');
+
 const mongoose = require('mongoose');
 
 const placesRoutes = require('./routes/places-route');
@@ -8,7 +8,7 @@ const userRoutes = require('./routes/users-routes');
 
 const app = express();
 const HttpError = require('./models/http-error');
-const e = require('express');
+
 
 
 const URI = 'mongodb://127.0.0.1:27017/maps';
