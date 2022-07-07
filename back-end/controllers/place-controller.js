@@ -116,16 +116,25 @@ exports.updatePlace = async (req, res, next) => {
     res.status(200).json({place: place.toObject({ getters: true})})
 };
 
-exports.deletePlace = (req, res, next) => {
+exports.deletePlace = async (req, res, next) => {
     const placeId = req.params.placeid;
-    if (!DUMMY_PLACES.find(p=> p.id === placeId)) {
-        throw new HttpError('Invalid Inputs', 422);    
+
+    let place;
+    try {
+        place = await Place.findById(placeId);
+    } catch (err) {
+        const error = new HttpError('Could not delete place', 500);
+        return next(error);
     }
 
-  DUMMY_PLACES = DUMMY_PLACES.filter(p => {
-    return p.id !== placeId
-  });
-  res.status(200).json({message: 'Deleted Place'})  // getters makes sure that mongoose add an id to whatever is created
+    try {
+        await place.remove();
+    } catch (err) {
+        const error = new HttpError('Could not delete place', 500);
+        return next(error);
+    }
+
+  res.status(200).json({message: 'Deleted Place'}) 
 };
 
 
