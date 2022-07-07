@@ -3,34 +3,45 @@ const { validationResult } = require('express-validator');
 const HttpError = require('../models/http-error');
 const getCoordinateAddress = require('../util/location');
 const Place = require('../models/place');
-
-
     
-const getPlaceById = (req, res, next) => {
+const getPlaceById = async (req, res, next) => {
     const placeId = req.params.placeid;
-    const place = DUMMY_PLACES.find(p => {
-        return p.id === placeId
-    })
+    
+    let place;
+    try {
+        place = await Place.findById(placeId);
+    } catch (err) {
+        const error = new HttpError(
+            'Something went wrong, could not find place', 500
+        );
+        return next(error);
+    }
+    
     if(!place) {
-      return next(
-          new HttpError('NO place found', 404)
-      );
+      const error = new HttpError('NO place found', 404)
+      
+      return next(error);
     } 
-    res.json({place: place});
+    res.json({place: place.toObject( {getters: true})}); // getters makes sure that mongoose add an id to whatever is created
 };
 
-const getPlacesByUserId = (req, res, next) => {
+const getPlacesByUserId = async (req, res, next) => {
     const userId = req.params.uid;
-    const places = DUMMY_PLACES.filter(p => {
-        return p.creator === userId
-    })
-    
+   
+    let places;
+    try {
+        places = await Place.find({ creator: userId });
+    } catch (err) {
+        const error = new HttpError(
+            'Something went wrong, could not find User', 500
+        );
+        return next(error);
+    }
     if(!places || places.length === 0) {
-        throw new HttpError('No place found for this userId', 404);
-        
+        throw new HttpError('No User found in the Database', 404);
       } 
       
-    res.json({ places })
+    res.json({ places: places.map(place => place.toObject( {getters: true})) })
 }
 
 const createPlace = async (req, res, next) => {
@@ -46,7 +57,7 @@ const createPlace = async (req, res, next) => {
         coordinates = await getCoordinateAddress(address);
         console.log("Na here", coordinates)
     } catch (error) {
-        return next(error); 
+        return next(error); s
     }
    
     const createdPlace = new Place({
@@ -67,12 +78,11 @@ const createPlace = async (req, res, next) => {
         );
         return next(error);
     }
-
     
     res.status(201).json({place: createdPlace})
 }
 
-exports.updatePlace = (req, res, next) => {
+exports.updatePlace = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log(errors)
@@ -82,14 +92,28 @@ exports.updatePlace = (req, res, next) => {
     const { title, description } = req.body; 
     const placeId = req.params.placeid;
 
-    const updatedPlace = {...DUMMY_PLACES.find(p => p.id === placeId)}; 
-    const placeIndex = DUMMY_PLACES.findIndex(p => p.id === placeId)
-    updatedPlace.title = title;
-    updatedPlace.description = description
+    let place;
+    try {
+        place = await Place.findById(placeId);
+    } catch (err) {
+        const error = new HttpError('Somthing went wrong', 500 )
+        return next(error)
+    }
+    
+    place.title = title;
+    place.description = description;
 
-    DUMMY_PLACES[placeIndex] = updatedPlace;
+    try {
+        await place.save();
+    } catch (err) {
+        const error = new HttpError(
+            'Something went wrong, could not update place.', 500
+        );
+        return next(error);
+    }
+    
 
-    res.status(200).json({place: updatedPlace})
+    res.status(200).json({place: place.toObject({ getters: true})})
 };
 
 exports.deletePlace = (req, res, next) => {
@@ -101,7 +125,7 @@ exports.deletePlace = (req, res, next) => {
   DUMMY_PLACES = DUMMY_PLACES.filter(p => {
     return p.id !== placeId
   });
-  res.status(200).json({message: 'Deleted Place'})
+  res.status(200).json({message: 'Deleted Place'})  // getters makes sure that mongoose add an id to whatever is created
 };
 
 
