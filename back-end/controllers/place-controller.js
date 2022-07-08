@@ -22,7 +22,7 @@ const getPlaceById = async (req, res, next) => {
       
       return next(error);
     } 
-    res.json({place: place.toObject( {getters: true})}); // getters makes sure that mongoose add an id to whatever is created
+    res.json({place: place.toObject( {getters: true})}); // getters makes sure that mongoose add an id to whatever is created and it removes the underscore in the id created
 };
 
 const getPlacesByUserId = async (req, res, next) => {
@@ -86,7 +86,7 @@ exports.updatePlace = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log(errors)
-        throw new HttpError('Invalid Inputs', 422);
+        return next( new HttpError('Invalid Inputs', 422));
     }
 
     const { title, description } = req.body; 

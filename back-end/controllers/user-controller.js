@@ -1,40 +1,56 @@
-const DUMMY_USERS = [
-    {
-        id: 'u1',
-        name: ' Gerald Eze',
-        email: 'test2@test.com',
-        password: '111111test'
-    }
-];
+
 const uuid = require('uuid');
 const HttpError = require('../models/http-error');
+
+const User = require('../models/user');
+const { validationResult } = require('express-validator');
+
 
 exports.getUsers = (req, res, next) => {
   res.status(200).json({users: DUMMY_USERS})
 };
 
-exports.createNewUser = (req, res, next) => {
+exports.createNewUser = async (req, res, next) => {
+  console.log(req.body)
   const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log(errors)
-        throw new HttpError('Invalid Inputs', 422);
+        return next( new HttpError('Invalid Inputs indeed', 422) );
     }
-  const { name, email, password } = req.body;
+  const { name, email, password, places } = req.body;
+  
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ email: email })
+  } catch (err) {
+    const error = new HttpError('Signing Up Failed', 500)
+    return next(error);
+  };
 
-  const hasUser = DUMMY_USERS.find(u => u.email === email);
-  if (hasUser) {
-      throw new HttpError('Error while signup, possibly email exist already', 422 )
+  if (existingUser) {
+    const error = new HttpError(
+      'User already exists. Kindly login instead.', 422);
+      return next(error);
   }
+  const createdUser = new User({
+    name: name,
+    email: email,
+    image: "goat.jpg",
+    password: password,
+    places: places
+   });
 
-  const createdUser = {
-      id: uuid.v4(),
-      name,
-      email,
-      password 
-    };
-  DUMMY_USERS.push(createdUser);
+   try {
+    await createdUser.save();
+} catch (err) {
+    const error = new HttpError(
+        'Signing up failed, please try again', 
+        500
+    );
+    return next(error);
+}
 
-  res.status(200).json({user: createdUser})
+  res.status(201).json({user: createdUser.toObject({ getters: true})}); //getters remove the underscore in mongdb id
 };
 
 exports.loginUser = (req, res, next) => {
