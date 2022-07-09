@@ -4,10 +4,20 @@ const HttpError = require('../models/http-error');
 
 const User = require('../models/user');
 const { validationResult } = require('express-validator');
+const user = require('../models/user');
 
 
-exports.getUsers = (req, res, next) => {
-  res.status(200).json({users: DUMMY_USERS})
+exports.getUsers = async (req, res, next) => {
+  let users;
+  try {
+    users = await User.find({}, '-password'); //-password makes sure we dont add it when using find()
+  } catch (err) {
+    console.log(err)
+    const error = new HttpError('Fetching Users failed, please try again later', 500)
+      return next(error)
+  }
+  
+  res.json({users: users.map(user => user.toObject({ getters: true})) });
 };
 
 exports.createNewUser = async (req, res, next) => {
@@ -17,7 +27,7 @@ exports.createNewUser = async (req, res, next) => {
         console.log(errors)
         return next( new HttpError('Invalid Inputs indeed', 422) );
     }
-  const { name, email, password, places } = req.body;
+  const { name, email, password } = req.body;
   
   let existingUser;
   try {
@@ -37,7 +47,7 @@ exports.createNewUser = async (req, res, next) => {
     email: email,
     image: "goat.jpg",
     password: password,
-    places: places
+    places: []
    });
 
    try {
@@ -53,13 +63,26 @@ exports.createNewUser = async (req, res, next) => {
   res.status(201).json({user: createdUser.toObject({ getters: true})}); //getters remove the underscore in mongdb id
 };
 
-exports.loginUser = (req, res, next) => {
+exports.loginUser = async (req, res, next) => {
   
   const { email, password } = req.body;
-  const Userlogin = DUMMY_USERS.find(u => u.email === email);
-  if (!Userlogin || Userlogin.password !== password) {
-      throw new HttpError('Error while login', 401)
-  }
+  
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ email: email })
+  } catch (err) {
+    const error = new HttpError('Logging In Failed', 500)
+    return next(error);
+  };
+
+  if(!existingUser || existingUser.password !== password) {
+    const error = new HttpError(
+      'Invalid Credentials.',
+      401
+    )
+    return next(error)
+  };
+
   res.status(200).json({message: 'LOGIN'})
 };
 

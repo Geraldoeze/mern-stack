@@ -10,6 +10,8 @@ const app = express();
 const HttpError = require('./models/http-error');
 
 
+const MONGODB_URI = 
+ `mongodb+srv://geraldoeze:Wnaxx5M7fs2KX8q5@mapcluster.oefbid7.mongodb.net/?retryWrites=true&w=majority`;
 
 const URI = 'mongodb://127.0.0.1:27017/maps';
 
@@ -36,7 +38,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(URI)
+  .connect(MONGODB_URI)
   .then( () => {
     app.listen(5000);
     console.log("Connected!!")
