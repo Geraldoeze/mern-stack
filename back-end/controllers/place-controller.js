@@ -57,13 +57,13 @@ const createPlace = async (req, res, next) => {
     }
     const { title, description, address, creator } = req.body; 
 
-    let coordinates;
-    try {
-        coordinates = await getCoordinateAddress(address);
-        console.log("Na here", coordinates)
-    } catch (error) {
-        return next(error); 
-    }
+    let coordinates = 3.5;
+    // try {
+    //     coordinates = await getCoordinateAddress(address);
+    //     console.log("Na here", coordinates)
+    // } catch (error) {
+    //     return next(error); 
+    // }
    
     const createdPlace = new Place({
         title: title,
