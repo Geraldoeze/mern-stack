@@ -4,14 +4,7 @@ const HttpError = require('../models/http-error');
 const getCoordinateAddress = require('../util/location');
 const Place = require('../models/place');
 const User = require('../models/user');    
-const  mongoose  = require('mongoose');
-
-
-const conn = mongoose.connection;
-
-conn.on('error', () => console.error.bind(console, 'connection error'));
-
-conn.once('open', () => console.info('Connection to Database is successful'));
+const mongoose = require('mongoose');
 
 
 const getPlaceById = async (req, res, next) => {
@@ -81,39 +74,42 @@ const createPlace = async (req, res, next) => {
         image: "lion.jpg",
         creator: creator
     });
-
+    
     let user;
+    
     try {
         user = await User.findById(creator);
-    } catch (err) {
-        const error = new HttpError('Creating place failed.', 500)
-        return next(error);
-    }
-    if (!user) {
-        const error = new HttpError('Could not find user with that id', 500)
-        return(error);
-    }
-    console.log(createdPlace);
 
-    
-    
-    try {
-        const sess = await conn.startSession();
-        sess.startTransaction();
-        await createdPlace.save({ session: sess })
-        user.places.push(createdPlace);
-        await user.save({ session: sess })
-        await sess.commitTransaction();
-       
-        
     } catch (err) {
         const error = new HttpError(
-            'Creating place failing, please try again', 
+            'Creating place failed, please try again.',
             500
         );
         return next(error);
     }
-    
+
+    if(!user) {
+        const error = new HttpError('Could not find user for the provided id', 404)
+        return next(error)
+    }
+    console.log(user);
+
+    try {  
+        const sess = await mongoose.startSession();
+        sess.startTransaction();
+        await createdPlace.save({session: sess});
+        user.places.push(createdPlace);
+        await user.save({session: sess});
+        sess.commitTransaction();
+ 
+    }   catch (err) {
+        const error = new HttpError(
+            'Creating place failed, please try again.',
+            500
+        );
+        return next(error);
+    }
+
     res.status(201).json({place: createdPlace})
 }
 
