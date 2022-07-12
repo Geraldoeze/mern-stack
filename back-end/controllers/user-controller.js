@@ -83,6 +83,7 @@ exports.loginUser = async (req, res, next) => {
     return next(error)
   };
 
-  res.status(200).json({message: 'LOGIN'})
+  res.status(200).json({message: 'LOGIN', 
+      user: existingUser.toObject({getters: true})})
 };
 

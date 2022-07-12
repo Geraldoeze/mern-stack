@@ -6,6 +6,14 @@ const Place = require('../models/place');
 const User = require('../models/user');    
 const  mongoose  = require('mongoose');
 
+
+const conn = mongoose.connection;
+
+conn.on('error', () => console.error.bind(console, 'connection error'));
+
+conn.once('open', () => console.info('Connection to Database is successful'));
+
+
 const getPlaceById = async (req, res, next) => {
     const placeId = req.params.placeid;
     
@@ -57,13 +65,13 @@ const createPlace = async (req, res, next) => {
     }
     const { title, description, address, creator } = req.body; 
 
-    let coordinates = 3.5;
-    // try {
-    //     coordinates = await getCoordinateAddress(address);
-    //     console.log("Na here", coordinates)
-    // } catch (error) {
-    //     return next(error); 
-    // }
+    let coordinates;
+    try {
+        coordinates = await getCoordinateAddress(address);
+        console.log("Na here", coordinates)
+    } catch (error) {
+        return next(error); 
+    }
    
     const createdPlace = new Place({
         title: title,
@@ -85,18 +93,22 @@ const createPlace = async (req, res, next) => {
         const error = new HttpError('Could not find user with that id', 500)
         return(error);
     }
-    console.log(user);
+    console.log(createdPlace);
 
+    
+    
     try {
-        const sess = await mongoose.startSession();
+        const sess = await conn.startSession();
         sess.startTransaction();
         await createdPlace.save({ session: sess })
         user.places.push(createdPlace);
         await user.save({ session: sess })
         await sess.commitTransaction();
+       
+        
     } catch (err) {
         const error = new HttpError(
-            'Creating place failed, please try again', 
+            'Creating place failing, please try again', 
             500
         );
         return next(error);
