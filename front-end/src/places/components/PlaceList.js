@@ -16,6 +16,7 @@ const PlaceList = (props) => {
 
     return <ul className="place-list">
         {props.items.map(place => {
+            console.log(place)
            return <PlaceItem 
               key={place.id} 
               id={place.id} 

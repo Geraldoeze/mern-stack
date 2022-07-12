@@ -5,12 +5,14 @@ import { AuthContext } from "../../context/auth-context";
 
 const NavLinks = () => {
     const auth = useContext(AuthContext);
+    const location = `/${auth.userId}/places`;
+
     return <ul className="nav-links">
         <li>
             <NavLink to='/' exact="true" >ALL USERS</NavLink>
         </li>
         {auth.isLoggedIn && (<li>
-            <NavLink to='/ul/places'>MY PLACES</NavLink>
+            <NavLink to={location} >MY PLACES</NavLink>
         </li>)}
         {auth.isLoggedIn && (<li>
             <NavLink to='/places/new'>ADD PLACE</NavLink>
