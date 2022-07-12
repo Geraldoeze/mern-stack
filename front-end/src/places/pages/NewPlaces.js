@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import {useNavigate} from 'react-router-dom'
 
 import "./PlaceForm.css";
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
@@ -30,7 +31,7 @@ const NewPlace = () => {
         }
     }, false);
 
-console.log(formState.isValid)
+const navigate = useNavigate();
 
 const placeSubmitHandler = async event => {
     event.preventDefault();
@@ -46,6 +47,7 @@ const placeSubmitHandler = async event => {
             'Content-Type':'application/json'
         })
         //Redirect the user to a different page
+        navigate('/', {replace: true})
     } catch (err) {}
 }
 
