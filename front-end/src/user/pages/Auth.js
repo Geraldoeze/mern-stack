@@ -48,7 +48,7 @@ const Auth = () => {
          
          setIsLoginMode((prevMode) => !prevMode);
       };
-        console.log(isLoginMode)
+        
 
     const authSubmitHandler = async event => {
           event.preventDefault();

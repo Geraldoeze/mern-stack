@@ -1,4 +1,4 @@
-// import React, {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 // import { useParams } from "react-router-dom";
 
 // import Input from "../../shared/components/FormElements/Input";
@@ -8,7 +8,7 @@
 // import { useForm } from "../../shared/hooks/form-hook";
 // import Card from "../../shared/components/UIElements/Card/Card";
 
-// const UpdatePlace = () => {
+const UpdatePlace = () => {
 //     const [isLoading, setIsLoding] = useState(true)
 //     const placeId = useParams().placeId;
 
@@ -85,6 +85,6 @@
 //             <Button type="submit" disabled={!formState.isValid}>UPDATE PLACE</Button>
 //         </form>
 //     );
-// }
+}
  
-// export default UpdatePlace;
+export default UpdatePlace;

@@ -47,9 +47,7 @@ const App = ( ) => {
         />
         <Route path="/places/:placeId"
           exact="true"
-           element={
-          <UpdatePlace />
-          }
+           element={<UpdatePlace />}
         />
         <Route path="*"
           exact="true" 

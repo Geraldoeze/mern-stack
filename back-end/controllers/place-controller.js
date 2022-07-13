@@ -46,7 +46,7 @@ const getPlacesByUserId = async (req, res, next) => {
     if(!userWithPlaces || userWithPlaces.length === 0) {
         throw new HttpError('No User found in the Database', 404);
       } 
-      console.log(userWithPlaces)
+      
     res.json({ places: userWithPlaces.places.map(place => place.toObject( {getters: true})) })
 }
 

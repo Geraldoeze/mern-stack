@@ -25,7 +25,7 @@ const UserPlaces = () => {
         }
         fetchedPlaces();
     }, [sendRequest, userId]);
-    console.log(loadedPlaces)
+    
     
     return (
       <React.Fragment>
