@@ -35,14 +35,19 @@ const Auth = () => {
              setFormData(
             {
                 ...formState.inputs,
-                 name: undefined
+                 name: undefined,
+                 image: undefined
              }, formState.inputs.email.isValid && formState.inputs.password.isValid)
          } else {
              setFormData({
                  ...formState.inputs,
-                 name: {
+                 name: { 
                      value: '',
                      isValid: false
+                 },
+                 image: {
+                   value: null,
+                   isValid: false
                  }
              } , false);
          } 
@@ -54,6 +59,7 @@ const Auth = () => {
     const authSubmitHandler = async event => {
           event.preventDefault();
 
+          console.log(formState.inputs)
           if (isLoginMode) {
             try {
                 const responseData = await sendRequest("http://localhost:5000/api/users/login",
@@ -117,7 +123,7 @@ const Auth = () => {
                 onInput={inputHandler}
               />
             )}
-            {!isLoginMode && <ImageUpload center id="image" />}
+            {!isLoginMode && <ImageUpload center id="image" onInput={inputHandler} />}
            <Input 
                 id="email"
                 element="input"
