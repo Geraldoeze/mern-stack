@@ -13,7 +13,7 @@ const HttpError = require('./models/http-error');
 // const MONGODB_URI = 
 //  `mongodb+srv://geraldoeze:Wnaxx5M7fs2KX8q5@mapcluster.oefbid7.mongodb.net/location?retryWrites=true&w=majority`;
 
-const MONGODB_URI = 'mongodb://127.0.0.1:27017/mern';
+// const MONGODB_URI = 'mongodb://127.0.0.1:27017/mern';
 
 
 app.use(bodyParser.json());
