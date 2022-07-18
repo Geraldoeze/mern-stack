@@ -43,7 +43,6 @@ export const useForm = (initialInputs, initialFormValidity) => {
 
     //Used useCallback to stop infinite loop on useEffect
     const inputHandler = useCallback((id, value, isValid) => {
-        console.log(value)
         dispatch({ 
         type: 'INPUT_CHANGE',
         value: value, 
