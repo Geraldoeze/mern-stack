@@ -67,7 +67,7 @@ const UpdatePlace = () => {
         } catch (err) {}
         
     }
-
+ 
     if(isLoading) {
         return <div className="center">
                   <LoadingSpinner />

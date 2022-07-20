@@ -4,7 +4,7 @@ const HttpError = require('../models/http-error');
 
 const User = require('../models/user');
 const { validationResult } = require('express-validator');
-const user = require('../models/user');
+
 
 
 exports.getUsers = async (req, res, next) => {
@@ -21,10 +21,10 @@ exports.getUsers = async (req, res, next) => {
 };
 
 exports.createNewUser = async (req, res, next) => {
-  console.log(req.body)
+  
   const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log(errors)
+        
         return next( new HttpError('Invalid Inputs indeed', 422) );
     }
   const { name, email, password } = req.body;

@@ -1,7 +1,9 @@
+const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
+const path = require('path');
 
 const placesRoutes = require('./routes/places-route');
 const userRoutes = require('./routes/users-routes');
@@ -13,10 +15,12 @@ const HttpError = require('./models/http-error');
 // const MONGODB_URI = 
 //  `mongodb+srv://geraldoeze:Wnaxx5M7fs2KX8q5@mapcluster.oefbid7.mongodb.net/location?retryWrites=true&w=majority`;
 
-// const MONGODB_URI = 'mongodb://127.0.0.1:27017/mern';
+const MONGODB_URI = 'mongodb://127.0.0.1:27017/mern';
 
 
 app.use(bodyParser.json());
+
+app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -39,6 +43,11 @@ app.use((req, res, next) => {
 
 // Express recogmises and treat a 4 parameter function as special error middleware function
 app.use((error, req, res, next) => { 
+  if(req.file) {
+    fs.unlink(req.file.path, (err) => {
+      console.log(err);
+    });
+  }
   if (res.headerSent) {
       return next(error);
   }
