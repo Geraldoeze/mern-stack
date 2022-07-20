@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import {useNavigate} from 'react-router-dom'
+import ImageUpload from '../../shared/components/FormElements/Image';
 
 import "./PlaceForm.css";
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
@@ -28,6 +29,10 @@ const NewPlace = () => {
         address: {
             value: '',
             isValid: false
+        },
+        image : {
+            value: null,
+            isValid: false
         }
     }, false);
 
@@ -36,16 +41,17 @@ const navigate = useNavigate();
 const placeSubmitHandler = async event => {
     event.preventDefault();
     try {
+        const formData = new FormData();
+        formData.append('title', formState.inputs.title.value);
+        formData.append('description', formState.inputs.description.value);
+        formData.append('address', formState.inputs.address.value);
+        formData.append('creator', auth.userId);
+        formData.append('image', formState.inputs.image.value);
+
         await sendRequest('http://localhost:5000/api/places', 
-        'POST', JSON.stringify({
-            title: formState.inputs.title.value,
-            description: formState.inputs.description.value,
-            address: formState.inputs.address.value,
-            creator: auth.userId
-        }), 
-        {
-            'Content-Type':'application/json'
-        })
+        'POST', 
+        formData
+        );
         //Redirect the user to a different page
         navigate('/', {replace: true})
     } catch (err) {}
@@ -81,7 +87,7 @@ return (
             errorText="Please enter a valid address."
             onInput={inputHandler}
         /> 
-
+        <ImageUpload id="image" onInput={inputHandler} errorText="Please provide an image" />
         <Button type="submit" disable={formState.isValid}>
             ADD PLACE
         </Button>
