@@ -13,22 +13,22 @@ import UserPlaces from './places/pages/UserPlaces';
 import UpdatePlace from './places/pages/UpdatePlace';
 
 const App = ( ) => {
-  const [isLoggedIn, setIsLoggedIn] = useState();
-  const [userId, setUserId] = useState(null);
+  const [token, setToken] = useState(null);
+  const [userId, setUserId] = useState(false);
 
-  const login = useCallback((uid) => {
-    setIsLoggedIn(true);
+  const login = useCallback((uid, token) => {
+    setToken(token);
     setUserId(uid);
   }, []);
 
   const logout = useCallback(() => {
-    setIsLoggedIn(false);
+    setToken(null);
     setUserId(null);
   }, []);
 
   let routes;  
   
-  if (isLoggedIn) {
+  if (token) {
     routes=(
       <React.Fragment>
        <Route path="/" 
@@ -89,7 +89,8 @@ const App = ( ) => {
   return (
     <AuthContext.Provider 
       value={{
-        isLoggedIn: isLoggedIn,
+        isLoggedIn: !!token, //The !! in from of token converts token to true if there's a value or data type
+        token: token,
         userId: userId,
         login: login,
         logout: logout}}>

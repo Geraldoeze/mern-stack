@@ -1,4 +1,4 @@
-
+const jwt = require('jsonwebtoken');
 const uuid = require('uuid');
 const HttpError = require('../models/http-error');
 
@@ -68,7 +68,21 @@ console.log(createdUser)
     return next(error);
 }
 
-  res.status(201).json({user: createdUser.toObject({ getters: true})}); //getters remove the underscore in mongdb id
+  let token;
+  try {
+    token = jwt.sign(
+    {userId: createdUser.id, email: createdUser.email },
+    'supervenom_toxic', 
+    {expiresIn: '1h'});
+  } catch (err) {
+    const error = new HttpError(
+      'Signing up failed, please try again', 
+      500
+  );
+  return next(error);
+  };
+
+  res.status(201).json({userId: createdUser.id, email: createdUser.email, token: token }); 
 };
 
 exports.loginUser = async (req, res, next) => {
@@ -81,9 +95,9 @@ exports.loginUser = async (req, res, next) => {
   } catch (err) {
     const error = new HttpError('Logging In Failed', 500)
     return next(error);
-  };
+  };  
 
-  if(!existingUser || existingUser.password !== password) {
+  if(!existingUser ) {
     const error = new HttpError(
       'Invalid Credentials.',
       401
@@ -91,7 +105,42 @@ exports.loginUser = async (req, res, next) => {
     return next(error)
   };
 
+  let isValidPass = false;
+  try {
+    isValidPass = await bcrypt.compare(password, existingUser.password);
+  } catch (err) {
+    const error = new HttpError('Could not login, check password', 500);
+    return next(error)
+  }
+  
+  if (!isValidPass) {
+    const error = new HttpError(
+      'Invalid credentials, could not log you in.', 401
+    )
+    return next(error);
+  };
+
+  
+  let token;
+  try {
+    token = jwt.sign(
+    {userId: existingUser.id, email: existingUser.email },
+    'supervenom_toxic', 
+    {expiresIn: '1h'});
+  } catch (err) {
+    const error = new HttpError(
+      'Logging in failed, please try again', 
+      500
+  );
+  return next(error);
+  };
+  
+
+   
   res.status(200).json({message: 'LOGIN', 
-      user: existingUser.toObject({getters: true})})
+      userId: existingUser.id,
+      email: existingUser.email,
+      token: token
+  });  
 };
 
