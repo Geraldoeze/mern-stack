@@ -100,7 +100,7 @@ exports.loginUser = async (req, res, next) => {
   if(!existingUser ) {
     const error = new HttpError(
       'Invalid Credentials.',
-      401
+      403
     )
     return next(error)
   };
@@ -115,7 +115,7 @@ exports.loginUser = async (req, res, next) => {
   
   if (!isValidPass) {
     const error = new HttpError(
-      'Invalid credentials, could not log you in.', 401
+      'Invalid credentials, could not log you in.', 403
     )
     return next(error);
   };
