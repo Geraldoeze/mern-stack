@@ -1,7 +1,7 @@
 import React, {useState, useContext} from "react";
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button/Button";
-import { VALIDATOR_EMAIL, VALIDATOR_MIN, VALIDATOR_REQUIRE } from "../../shared/util/validators";
+import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
 
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
@@ -58,8 +58,7 @@ const Auth = () => {
 
     const authSubmitHandler = async event => {
           event.preventDefault();
-
-          console.log(formState.inputs)
+          
           if (isLoginMode) {
             try {
                 const responseData = await sendRequest("http://localhost:5000/api/users/login",
@@ -100,7 +99,7 @@ const Auth = () => {
     // const errorHandler = () => {
     //     clearError();
     // };
-
+console.log(formState.isValid)
     return (
      <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
@@ -140,13 +139,13 @@ const Auth = () => {
                 element="input"
                 type="password"
                 label="Password"
-                validators={[VALIDATOR_MIN(6)]}
+                validators={[VALIDATOR_MINLENGTH(6)]}
                 errorText="Password is too short(min. 6)."
                 onInput={inputHandler}
             />
             <Button
               type="submit" 
-              disable={!formState.isValid}
+              disabled={!formState.isValid}
             >{isLoginMode ? 'LOGIN' : 'SIGNUP'}</Button>
             <Button 
               type="button"
