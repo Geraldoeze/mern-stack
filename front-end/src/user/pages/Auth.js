@@ -87,8 +87,7 @@ const Auth = () => {
                 'POST',
                 formData                
             );
-
-            auth.login(responseData.user.id);
+            auth.login(responseData.userId, responseData.token);
             } catch (err) {
                 
             }
@@ -99,7 +98,7 @@ const Auth = () => {
     // const errorHandler = () => {
     //     clearError();
     // };
-console.log(formState.isValid)
+
     return (
      <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
