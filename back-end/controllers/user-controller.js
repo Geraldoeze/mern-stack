@@ -72,7 +72,7 @@ console.log(createdUser)
   try {
     token = jwt.sign(
     {userId: createdUser.id, email: createdUser.email },
-    'supervenom_toxic', 
+    process.env.JWT_KEY,
     {expiresIn: '1h'});
   } catch (err) {
     const error = new HttpError(
@@ -125,7 +125,7 @@ exports.loginUser = async (req, res, next) => {
   try {
     token = jwt.sign(
     {userId: existingUser.id, email: existingUser.email },
-    'supervenom_toxic', 
+    process.env.JWT_KEY, 
     {expiresIn: '1h'});
   } catch (err) {
     const error = new HttpError(
@@ -135,7 +135,6 @@ exports.loginUser = async (req, res, next) => {
   return next(error);
   };
   
-
    
   res.status(200).json({message: 'LOGIN', 
       userId: existingUser.id,

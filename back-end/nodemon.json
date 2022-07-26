@@ -1,0 +1,9 @@
+{
+    "env": {
+        "DB_USER": "geraldoeze",
+        "DB_PASSWORD": "Wnaxx5M7fs2KX8q5",
+        "DB_NAME": "location",
+        "GOOGLE_API_KEY": "AIzaSyBiphie6iQJYWNKIwUKlQmN4j8NvXybalQ" ,
+        "JWT_KEY": "supervenom_toxic"
+   }
+}
