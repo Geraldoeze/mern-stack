@@ -93,13 +93,11 @@ const App = () => {
         logout: logout}}>
     <MainNavigation />
      <main>
+     <Suspense fallback={<div className='center'> <LoadingSpinner /> </div>}>
        <Routes>
-        <Suspense fallback={<div className='center'> 
-          <LoadingSpinner /> 
-          </div>}>
             {routes}
-        </Suspense>
       </Routes>
+      </Suspense>
      </main>
     </AuthContext.Provider>
   );
