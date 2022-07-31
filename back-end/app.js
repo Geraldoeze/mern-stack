@@ -22,24 +22,29 @@ app.use(bodyParser.json());
 
 app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Headers', 
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');  
-  next();
-});
+app.use( express.static(path.join('public')));
+
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', '*');
+//   res.setHeader(
+//     'Access-Control-Allow-Headers', 
+//     'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');  
+//   next();
+// });
 
 app.use('/api/places', placesRoutes);
 app.use('/api/users', userRoutes);
 
+app.use((req, res, next) => {
+  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+});
 
 //This handle routes that don't exist
-app.use((req, res, next) => {
-  const error = new HttpError('No Route found', 404);
-  throw error;  
-});
+// app.use((req, res, next) => {
+//   const error = new HttpError('No Route found', 404);
+//   throw error;  
+// });
 
 // Express recogmises and treat a 4 parameter function as special error middleware function
 app.use((error, req, res, next) => { 
