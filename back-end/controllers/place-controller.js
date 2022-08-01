@@ -61,7 +61,7 @@ const createPlace = async (req, res, next) => {
     let coordinates;
     try {
         coordinates = await getCoordinateAddress(address);
-        console.log("Na here", coordinates)
+        
     } catch (error) {
         return next(error); 
     }

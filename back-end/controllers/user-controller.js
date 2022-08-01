@@ -57,7 +57,7 @@ exports.createNewUser = async (req, res, next) => {
     password: hashedPassword,
     places: []
    });
-console.log(createdUser)
+
    try {
     await createdUser.save();
 } catch (err) {
