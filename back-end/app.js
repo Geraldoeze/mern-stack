@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 
 app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 
-app.use( express.static(path.join('public')));
+// app.use( express.static(path.join('public')));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -36,15 +36,16 @@ app.use((req, res, next) => {
 app.use('/api/places', placesRoutes);
 app.use('/api/users', userRoutes);
 
-app.use((req, res, next) => {
-  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
-});
-
-//This handle routes that don't exist
+//  this is used when serving both front and back ends on the same server.
 // app.use((req, res, next) => {
-//   const error = new HttpError('No Route found', 404);
-//   throw error;  
+//   res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 // });
+
+//This handle routes that don't exist 
+app.use((req, res, next) => {
+  const error = new HttpError('Could not find this route', 404);
+  throw error;   
+});
 
 // Express recogmises and treat a 4 parameter function as special error middleware function
 app.use((error, req, res, next) => { 
