@@ -86,7 +86,7 @@ const UpdatePlace = () => {
    
     return ( 
         <React.Fragment>  
-            <ErrorModal error={error} onClear={clearError} />            
+            <ErrorModal errbor={error} onClear={clearError} />            
         {!isLoading && loadedPlace && (
         <form className="place-form" onSubmit={placeUpdateSubmitHandler}>
             <Input 
