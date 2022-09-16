@@ -37,7 +37,7 @@ const getPlacesByUserId = async (req, res, next) => {
         userWithPlaces = await User.findById(userId).populate('places');
     } catch (err) {
         const error = new HttpError(
-            'Fetching places failed, please try again later.', 500
+            'Fetching places failed, please try again later OKAY.', 500
         );
         return next(error);
     }
@@ -102,7 +102,7 @@ const createPlace = async (req, res, next) => {
  
     }   catch (err) {
         const error = new HttpError(
-            'Creating place failed, please try again.',
+            'Creating place failed. Please try again.',
             500
         );
         return next(error);
