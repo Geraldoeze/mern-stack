@@ -29,4 +29,4 @@ router.patch('/:placeid',
 
 router.delete('/:placeid', placesControllers.deletePlace)
 
-module.exports = router; 
+module.exports = router;   

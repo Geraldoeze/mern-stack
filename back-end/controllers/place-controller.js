@@ -53,7 +53,7 @@ const getPlacesByUserId = async (req, res, next) => {
 const createPlace = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log(errors);
+        console.log(errors, "Na here");
         next( new HttpError('Invalid Inputs', 422));
     }
     const { title, description, address } = req.body; 
@@ -100,7 +100,7 @@ const createPlace = async (req, res, next) => {
         user.places.push(createdPlace);
         await user.save({session: sess});
         sess.commitTransaction();
- 
+        
     }   catch (err) {
         const error = new HttpError(
             'Creating place failed. Please Try Again.',
@@ -108,20 +108,21 @@ const createPlace = async (req, res, next) => {
         );
         return next(error);
     }
-
+    console.log(createdPlace)
     res.status(201).json({place: createdPlace})
 };
 
-exports.updatePlace = async (req, res, next) => {
+const updatePlace = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         console.log(errors)
         return next( new HttpError('Invalid Inputs', 422));
     }
-
+    // const userID = req.userData
+    console.log(req.userData)
     const { title, description } = req.body; 
     const placeId = req.params.placeid;
-
+    
     let place;
     try {
         place = await Place.findById(placeId);
@@ -130,14 +131,14 @@ exports.updatePlace = async (req, res, next) => {
         return next(error)
     }
 
-    if (place.creator.toString() !== req.userData.userId) {
-        const error = new HttpError('You are not allowed to edit this place', 401 )
-        return next(error)
-    }
+    // if (place.creator.toString() !== req.userData.userId) {
+    //     const error = new HttpError('You are not allowed to edit this place', 401 )
+    //     return next(error)
+    // }
     
     place.title = title;
     place.description = description;
-
+    console.log(place)
     try {
         await place.save();
     } catch (err) {
@@ -150,9 +151,9 @@ exports.updatePlace = async (req, res, next) => {
     res.status(200).json({place: place.toObject({ getters: true})})
 };
 
-exports.deletePlace = async (req, res, next) => {
+const deletePlace = async (req, res, next) => {
     const placeId = req.params.placeid;
-
+    
     let place;
     try {
         place = await Place.findById(placeId).populate('creator');
@@ -165,11 +166,11 @@ exports.deletePlace = async (req, res, next) => {
         const error = new HttpError('Could not find place for this id.', 404);
         return next(error);
     }
-
-    if (place.creator.id !== req.userData.userId) {
-        const error = new HttpError('You are not allowed to delete this place', 401 )
-        return next(error)
-    }
+    
+    // if (place.creator.id !== req.userData.userId) {
+    //     const error = new HttpError('You are not allowed to delete this place', 401 )
+    //     return next(error)
+    // }
 
     const imagePath = place.image;
  
@@ -196,3 +197,5 @@ exports.deletePlace = async (req, res, next) => {
 exports.getPlaceById = getPlaceById;
 exports.getPlacesByUserId = getPlacesByUserId
 exports.createPlace = createPlace;
+exports.deletePlace = deletePlace;
+exports.updatePlace = updatePlace;
