@@ -18,30 +18,28 @@ app.use(bodyParser.json());
 // const MONGODB_URI = 'mongodb://127.0.0.1:27017/mern';
 const MONGODB_URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@mapcluster.oefbid7.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
-// app.use(multer({limits: fileLimit, storage: fileStorage, fileFilter: fileFilter}).single('image'))
-app.use(express.static(path.join(__dirname, "public")));
-app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use(helmet());
 app.use(cors());
 
-// app.use((req, res, next) => {
-//     //CORS error handler
-//   res.setHeader('Access-Control-Allow-Origin', '*');
-//   res.setHeader(
-//     'Access-Control-Allow-Headers',
-//     'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-//   res.setHeader('Access-Control-Allow-Methods', 'DELETE', 'PATCH', 'POST', 'GET');
-//   next();
-//   })
+app.use((req, res, next) => {
+    //CORS error handler
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'DELETE', 'PATCH', 'POST', 'GET');
+  next();
+  })
  
+//  app.use(multer({limits: fileLimit, storage: fileStorage, fileFilter: fileFilter}).single('image'))
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/images", express.static(path.join(__dirname, "images")));
+  
+
 app.use("/api/places", placesRoutes);
 app.use("/api/users", userRoutes);
 
-// app.post('api/users/signup', (req, res) => {
-//     // console.log(req.file)
-//     console.log(req.file)
-//   })
 
 //This handle routes that don't exist
 app.use((req, res, next) => {
