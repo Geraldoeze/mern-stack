@@ -10,11 +10,11 @@ router.get("/", userController.getUsers);
 router.post(
   "/signup",
   fileUpload.single("image"),
-  [
-    check("name").not().isEmpty(),
-    check("email").normalizeEmail().isEmail(),
-    check("password").isLength({ min: 6 }),
-  ],
+  // [
+  //   check("name").not().isEmpty(),
+  //   check("email").normalizeEmail().isEmail(),
+  //   check("password").isLength({ min: 6 }),
+  // ],
   userController.createNewUser
 );
 

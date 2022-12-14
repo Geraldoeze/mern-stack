@@ -23,7 +23,7 @@ exports.getUsers = async (req, res, next) => {
 };
 
 exports.createNewUser = async (req, res, next) => {
-  console.log(req.body, req.file);
+  
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(new HttpError("Invalid Inputs indeed", 422));
@@ -34,7 +34,7 @@ exports.createNewUser = async (req, res, next) => {
   try {
     existingUser = await User.findOne({ email: email });
   } catch (err) {
-    const error = new HttpError("Signing Up Failed", 500);
+    const error = new HttpError("Signing Up Failed", 545);
     return next(error);
   }
 
@@ -50,7 +50,7 @@ exports.createNewUser = async (req, res, next) => {
   try {
     hashedPassword = await bcrypt.hash(password, 12);
   } catch (err) {
-    const error = new HttpError("Could not create user, please try again", 500);
+    const error = new HttpError("Could not create user, please try again", 540);
     return next(error);
   }
 
@@ -65,7 +65,7 @@ exports.createNewUser = async (req, res, next) => {
   try {
     await createdUser.save();
   } catch (err) {
-    const error = new HttpError("Signing up failed, please try again", 500);
+    const error = new HttpError("Signing up failed, please try again", 545);
     return next(error);
   }
 
@@ -77,7 +77,7 @@ exports.createNewUser = async (req, res, next) => {
       { expiresIn: "1h" }
     );
   } catch (err) {
-    const error = new HttpError("Signing up failed, please try again", 500);
+    const error = new HttpError("Signing up failed, please try again", 550);
     return next(error);
   }
 
