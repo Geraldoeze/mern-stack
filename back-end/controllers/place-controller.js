@@ -57,11 +57,11 @@ const getPlacesByUserId = async (req, res, next) => {
 
 const createPlace = async (req, res, next) => {
   console.log(req.body, req.file);
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    console.log(errors, "Na here");
-    next(new HttpError("Invalid Inputs", 422));
-  }
+  // const errors = validationResult(req);
+  // if (!errors.isEmpty()) {
+  //   console.log(errors, "Na here");
+  //   next(new HttpError("Invalid Inputs", 422));
+  // }
   const { title, description, address } = req.body;
 
   let coordinates;
@@ -114,6 +114,7 @@ const createPlace = async (req, res, next) => {
   console.log(createdPlace);
   res.status(201).json({ place: createdPlace });
 };
+
 
 const updatePlace = async (req, res, next) => {
   console.log(req.body);

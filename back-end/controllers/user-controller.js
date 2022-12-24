@@ -24,10 +24,10 @@ exports.getUsers = async (req, res, next) => {
 
 exports.createNewUser = async (req, res, next) => {
   
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return next(new HttpError("Invalid Inputs indeed", 422));
-  }
+  // const errors = validationResult(req);
+  // if (!errors.isEmpty()) {
+  //   return next(new HttpError("Invalid Inputs indeed", 422));
+  // }
   const { name, email, password } = req.body;
 
   let existingUser;
@@ -85,6 +85,8 @@ exports.createNewUser = async (req, res, next) => {
     .status(201)
     .json({ userId: createdUser.id, email: createdUser.email, token: token });
 };
+
+
 
 exports.loginUser = async (req, res, next) => {
   const { email, password } = req.body;

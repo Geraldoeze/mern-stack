@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "jest": "^29.3.1",
     "sharp": "^0.31.2"
   }
 }
