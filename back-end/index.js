@@ -18,11 +18,6 @@ app.use(bodyParser.json());
 // const MONGODB_URI = 'mongodb://127.0.0.1:27017/mern';
 const MONGODB_URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@mapcluster.oefbid7.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
-
-app.use(helmet({
-  crossOriginResourcePolicy: false,
-}));
-
  
 //  app.use(multer({limits: fileLimit, storage: fileStorage, fileFilter: fileFilter}).single('image'))
 app.use(fileUpload);
@@ -32,7 +27,7 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use((req, res, next) => {
     //CORS error handler
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Origin', 'https://locations-xi.vercel.app');
   res.setHeader('Access-Control-Allow-Methods', 'POST', 'GET', 'PATCH', 'DELETE');
   res.setHeader(
     'Access-Control-Allow-Headers',
@@ -42,13 +37,11 @@ app.use((req, res, next) => {
   })
 
 
-
 app.use("/api/places", placesRoutes);
 app.post("/api/users/signup", (req, res, next) => {
-  res.json({message: 'Signup recieved', res: req.body})
+  res.status(201).json({message: 'Signup recieved'})
 })
 // app.use("/api/users", userRoutes);
-
 
 
 // This handle routes that don't exist

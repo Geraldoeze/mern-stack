@@ -12,15 +12,7 @@ router.get("/user/:uid", placesControllers.getPlacesByUserId);
 
 router.use(checkAuth);
 
-router.post(
-  "/",
-  // fileUpload.single("image"),
-  // [
-  //   check("title").not().isEmpty(),
-  //   check("description").isLength({ min: 5 }),
-  //   check("address").not().isEmpty(),
-  // ],
-  placesControllers.createPlace
+router.post( "/", placesControllers.createPlace
 );
 
 router.patch(
@@ -32,3 +24,10 @@ router.patch(
 router.delete("/:placeid", placesControllers.deletePlace);
 
 module.exports = router;
+
+ // fileUpload.single("image"),
+  // [
+  //   check("title").not().isEmpty(),
+  //   check("description").isLength({ min: 5 }),
+  //   check("address").not().isEmpty(),
+  // ]

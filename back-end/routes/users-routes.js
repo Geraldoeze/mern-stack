@@ -8,16 +8,16 @@ const fileUpload = require("../middlewaree/file-upload");
 router.get("/", userController.getUsers);
 
 router.post(
-  "/signup",
-  // fileUpload.single("image"),
-  // [
-  //   check("name").not().isEmpty(),
-  //   check("email").normalizeEmail().isEmail(),
-  //   check("password").isLength({ min: 6 }),
-  // ],
-  userController.createNewUser
+  "/signup", userController.createNewUser
 );
 
 router.post("/login", userController.loginUser);
 
 module.exports = router;
+
+ // fileUpload.single("image"),
+  // [
+  //   check("name").not().isEmpty(),
+  //   check("email").normalizeEmail().isEmail(),
+  //   check("password").isLength({ min: 6 }),
+  // ],
