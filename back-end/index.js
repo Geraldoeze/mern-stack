@@ -7,7 +7,7 @@ const multer = require("multer");
 const placesRoutes = require("./routes/places-route");
 const userRoutes = require("./routes/users-routes");
 const cors = require("cors");
-
+const fileUpload = require("./middlewaree/file-upload");
 const HttpError = require("./models/http-error");
 const { default: helmet } = require("helmet");
 
@@ -25,6 +25,7 @@ app.use(helmet({
 
  
 //  app.use(multer({limits: fileLimit, storage: fileStorage, fileFilter: fileFilter}).single('image'))
+app.use(fileUpload);
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
 
@@ -40,8 +41,13 @@ app.use((req, res, next) => {
   next();
   })
 
+
+
 app.use("/api/places", placesRoutes);
-app.use("/api/users", userRoutes);
+app.post("/api/users/signup", (req, res, next) => {
+  res.json({message: 'Signup recieved', res: req.body})
+})
+// app.use("/api/users", userRoutes);
 
 
 
