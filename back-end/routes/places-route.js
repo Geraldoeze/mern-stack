@@ -12,7 +12,7 @@ router.get("/user/:uid", placesControllers.getPlacesByUserId);
 
 router.use(checkAuth);
 
-router.post( "/", placesControllers.createPlace
+router.post( "/", fileUpload.single("image"), placesControllers.createPlace
 );
 
 router.patch(

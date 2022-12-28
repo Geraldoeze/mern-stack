@@ -49,6 +49,18 @@
 // //   next();
 // // })
 
+// app.use((req, res, next) => {
+//     //CORS error handler
+//   res.setHeader('Access-Control-Allow-Origin', '*');
+//   res.setHeader('Access-Control-Allow-Methods', 'POST', 'GET', 'PATCH', 'DELETE');
+//   res.setHeader(
+//     'Access-Control-Allow-Headers',
+//     'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+//   res.setHeader('Access-Control-Max-Age', 86400)
+//   next();
+//   })
+
+
 // app.use(cors({
 //   origin: '*',
 //   methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH', 'OPTION'],

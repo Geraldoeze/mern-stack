@@ -8,7 +8,7 @@ const fileUpload = require("../middlewaree/file-upload");
 router.get("/", userController.getUsers);
 
 router.post(
-  "/signup", userController.createNewUser
+  "/signup", fileUpload.single("image"), userController.createNewUser
 );
 
 router.post("/login", userController.loginUser);

@@ -34,7 +34,7 @@ exports.createNewUser = async (req, res, next) => {
   try {
     existingUser = await User.findOne({ email: email });
   } catch (err) {
-    const error = new HttpError("Signing Up Failed", 545);
+    const error = new HttpError("Signing Up Failed", 543);
     return next(error);
   }
 
@@ -45,15 +45,17 @@ exports.createNewUser = async (req, res, next) => {
     );
     return next(error);
   }
-
+  
   let hashedPassword;
   try {
     hashedPassword = await bcrypt.hash(password, 12);
   } catch (err) {
-    const error = new HttpError("Could not create user, please try again", 540);
+    const error = new HttpError(
+      'Could not create user, please try again.',
+      500
+    );
     return next(error);
   }
-
   const createdUser = new User({
     name: name,
     email: email,
@@ -65,7 +67,7 @@ exports.createNewUser = async (req, res, next) => {
   try {
     await createdUser.save();
   } catch (err) {
-    const error = new HttpError("Signing up failed, please try again", 545);
+    const error = new HttpError("Signing up failed, please try again", 541);
     return next(error);
   }
 
@@ -85,7 +87,6 @@ exports.createNewUser = async (req, res, next) => {
     .status(201)
     .json({ userId: createdUser.id, email: createdUser.email, token: token });
 };
-
 
 
 exports.loginUser = async (req, res, next) => {

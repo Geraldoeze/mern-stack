@@ -1,8 +1,10 @@
 const fs = require("fs");
 const express = require("express");
 const bodyParser = require("body-parser");
+
 const mongoose = require("mongoose");
 const path = require("path");
+
 const multer = require("multer");
 const placesRoutes = require("./routes/places-route");
 const userRoutes = require("./routes/users-routes");
@@ -11,37 +13,29 @@ const fileUpload = require("./middlewaree/file-upload");
 const HttpError = require("./models/http-error");
 
 
-
 const app = express();
 
 app.use(bodyParser.json());
 
-// const MONGODB_URI = 'mongodb://127.0.0.1:27017/mern';
-const MONGODB_URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@mapcluster.oefbid7.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+const MONGODB_URI = 'mongodb://127.0.0.1:27017/mern';
+// const MONGODB_URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@mapcluster.oefbid7.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
- 
-app.use((req, res, next) => {
-    //CORS error handler
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST', 'GET', 'PATCH', 'DELETE');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  res.setHeader('Access-Control-Max-Age', 86400)
-  next();
-  })
-
-//  app.use(multer({limits: fileLimit, storage: fileStorage, fileFilter: fileFilter}).single('image'))
-app.use(fileUpload);
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+
+  next();
+});
 
 app.use("/api/places", placesRoutes);
-app.post("/api/users/signup", (req, res, next) => {
-  res.status(201).json({message: 'Signup recieved'})
-})
-// app.use("/api/users", userRoutes);
+app.use("/api/users", userRoutes);
 
 
 // This handle routes that don't exist
@@ -67,7 +61,7 @@ app.use((error, req, res, next) => {
 mongoose
   .connect(MONGODB_URI, { useNewUrlParser: true })
   .then(() => {
-    app.listen(process.env.PORT || 5200);
+    app.listen(process.env.PORT || 5000);
     console.log("Connected!!");
   })
   .catch((err) => {

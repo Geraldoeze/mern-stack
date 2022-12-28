@@ -56,7 +56,7 @@ const getPlacesByUserId = async (req, res, next) => {
 };
 
 const createPlace = async (req, res, next) => {
-  console.log(req.body, req.file);
+  
   // const errors = validationResult(req);
   // if (!errors.isEmpty()) {
   //   console.log(errors, "Na here");
@@ -111,7 +111,7 @@ const createPlace = async (req, res, next) => {
     );
     return next(error);
   }
-  console.log(createdPlace);
+  
   res.status(201).json({ place: createdPlace });
 };
 
