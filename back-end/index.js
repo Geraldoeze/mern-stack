@@ -17,8 +17,8 @@ const app = express();
 
 app.use(bodyParser.json());
 
-const MONGODB_URI = 'mongodb://127.0.0.1:27017/mern';
-// const MONGODB_URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@mapcluster.oefbid7.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+// const MONGODB_URI = 'mongodb://127.0.0.1:27017/mern';
+const MONGODB_URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@mapcluster.oefbid7.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
